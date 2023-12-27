@@ -29,12 +29,12 @@ addTask.addEventListener("click", function() {
     inputTask.value = "";
 
     checkBox.addEventListener("click", function() {
-        if(checkBox.parentElement.style.textDecoration === "line-through") {
-            checkBox.parentElement.style.textDecoration = "none";
+        if(task.style.textDecoration === "line-through") {
+            task.style.textDecoration = "none";
+            task.style.color = "#000"
         } else {
-            checkBox.parentElement.style.textDecoration = "line-through";
-            /* add color */
-            checkBox.parentElement.style.color = "";
+            task.style.textDecoration = "line-through";
+            task.style.color = "#6b7280";
         };
     });
     
@@ -45,3 +45,7 @@ addTask.addEventListener("click", function() {
 });
 
 // add local storage
+// add edit task
+// add filter
+// add sort 
+// add Priority levels
