@@ -4,7 +4,10 @@ const clear = document.getElementById("clear");
 const taskContainer = document.getElementById("task-container");
 let initialValue;
 
-function addItem() {
+function addTodos(e) {
+  const localTodos = JSON.parse(localStorage.getItem("item")) || [];
+  const todos = [inputTask.value, ...localTodos];
+
   const taskList = document.createElement("div");
   taskList.classList.add("task-list");
 
@@ -22,32 +25,35 @@ function addItem() {
   deleteIcon.classList.add("fa-solid", "fa-trash-can");
   taskList.appendChild(deleteIcon);
 
-  if (!inputTask.value.trim()) {
-    alert("It's empty please type a task");
-  } else {
+  if (inputTask.value.trim()) {
     taskContainer.appendChild(taskList);
     taskContainer.insertBefore(taskList, taskContainer.children[0]);
+    localStorage.setItem("item", JSON.stringify(todos));
   }
   inputTask.value = "";
 
-  checkBox.addEventListener("click", completeItem);
-  task.addEventListener("click", editItem);
-  deleteIcon.addEventListener("click", deleteItem);
+  checkBox.addEventListener("click", completeTodos);
+  task.addEventListener("click", editTodos);
+  deleteIcon.addEventListener("click", deleteTodo);
 }
-addTask.addEventListener("click", addItem);
 
-function completeItem(e) {
+function completeTodos(e) {
   const target = e.target;
+
   if (target.previousSibling.style.textDecoration === "line-through") {
     target.previousSibling.style.textDecoration = "none";
     target.previousElementSibling.style.color = "#000";
+    target.previousElementSibling.style.backgroundColor = "#d68f84";
+    target.parentElement.style.backgroundColor = "#d68f84";
   } else {
     target.previousSibling.style.textDecoration = "line-through";
     target.previousElementSibling.style.color = "#6b7280";
+    target.previousElementSibling.style.backgroundColor = "#4ade80";
+    target.parentElement.style.backgroundColor = "#4ade80";
   }
 }
 
-function editItem(e) {
+function editTodos(e) {
   const target = e.target;
   const item = target.innerHTML;
   const editInput = document.createElement("input");
@@ -57,34 +63,80 @@ function editItem(e) {
   editInput.classList.add("edit");
   editInput.select();
   target.replaceWith(editInput);
-  editInput.addEventListener("dblclick", saveItem);
-  editInput.addEventListener("keyup", saveItem);
+
+  editInput.parentElement.style.backgroundColor = "#67e8f9";
+  editInput.style.backgroundColor = "#67e8f9";
+
+  editInput.addEventListener("dblclick", saveTodos);
+  editInput.addEventListener("keyup", saveTodos);
 }
 
-function saveItem(e) {
+function saveTodos(e) {
   const target = e.target;
+  const div = document.createElement("div");
+  div.classList.add("edited-todo");
+
   if (target.value.length > 0 && (e.key === "Enter" || e.type === "dblclick")) {
-    const div = document.createElement("div");
     div.innerText = target.value;
     target.replaceWith(div);
-    div.addEventListener("click", editItem);
+    div.parentElement.style.backgroundColor = "#d68f84";
+    div.style.backgroundColor = "#d68f84";
   } else if (
     target.value.length === 0 &&
     (e.key === "Enter" || e.type === "dblclick")
   ) {
-    const div = document.createElement("div");
-    div.innerText = target.value;
     div.innerText = initialValue;
     target.replaceWith(div);
-    div.addEventListener("click", editItem);
+    div.parentElement.style.backgroundColor = "#d68f84";
+    div.style.backgroundColor = "#d68f84";
   }
+  div.addEventListener("click", editTodos);
 }
 
-function deleteItem(e) {
-  const target = e.target;
-  target.parentElement.remove();
+function deleteTodo(e) {
+  const target = e.target.parentElement;
+  target.remove();
+  updateLocalStorage();
 }
 
-// add local storage
-// add sort
-// add Priority levels
+function updateLocalStorage() {
+  const taskElements = Array.from(document.querySelectorAll(".task"));
+  const todos = taskElements.map((taskElement) => taskElement.innerText);
+  localStorage.setItem("item", JSON.stringify(todos));
+}
+
+function clearTodos() {
+  taskContainer.innerHTML = "";
+  localStorage.clear();
+}
+
+function loadLocalStorage() {
+  const localTodos = JSON.parse(localStorage.getItem("item")) || [];
+  localTodos.forEach((todo) => {
+    const taskList = document.createElement("div");
+    taskList.classList.add("task-list");
+
+    const task = document.createElement("div");
+    task.classList.add("task");
+    taskList.appendChild(task);
+    task.innerText = todo;
+
+    const checkBox = document.createElement("input");
+    checkBox.type = "checkbox";
+    checkBox.classList.add("check-task");
+    taskList.appendChild(checkBox);
+
+    const deleteIcon = document.createElement("i");
+    deleteIcon.classList.add("fa-solid", "fa-trash-can");
+    taskList.appendChild(deleteIcon);
+
+    taskContainer.appendChild(taskList);
+
+    checkBox.addEventListener("click", completeTodos);
+    task.addEventListener("click", editTodos);
+    deleteIcon.addEventListener("click", deleteTodo);
+  });
+}
+window.addEventListener("load", loadLocalStorage);
+clear.addEventListener("click", clearTodos);
+addTask.addEventListener("click", addTodos);
