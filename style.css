@@ -1,0 +1,275 @@
+@import url("https://fonts.googleapis.com/css2?family=Yatra+One&display=swap");
+
+/* || Variable || */
+
+:root {
+  --COLOR-HEADING: #ff6854;
+  --COLOR-BORDER: #fff;
+  --COLOR-SOCIAL: #000;
+  --COLOR-INPUT: #da6e5e;
+  --COLOR-DELETE: #ef4444;
+  --COLOR-DELETE-ACTIVE: #000;
+  --COLOR-CLEAR-BUTTON: #fff;
+  --COLOR-CLEAR-BUTTON-ACTIVE: #000;
+  --COLOR-BORDER-BUTTON: #000;
+  --BACKGROUND-COLOR-SOCIAL-HOVER: #da6e5e;
+  --BACKGROUND-COLOR-BODY: #4b5563;
+  --BACKGROUND-COLOR-FOOTER: #9ca3af;
+  --BACKGROUND-COLOR-ADD-BUTTON: #4ade80;
+  --BACKGROUND-COLOR-ADD-BUTTON-ACTIVE: #da7869;
+  --BACKGROUND-COLOR-CLEAR-BUTTON: #da7869;
+  --BACKGROUND-COLOR-CREATETODOS: #d68f84;
+  --BACKGROUND-COLOR-DELETE: #e5e7eb;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: 0;
+}
+
+/* Style Body */
+
+body {
+  background-color: var(--BACKGROUND-COLOR-BODY);
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+/* Style Header */
+
+header {
+  font-family: "Yatra One", system-ui, Arial, Helvetica, sans-serif;
+  text-align: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--COLOR-BORDER);
+  color: var(--COLOR-HEADING);
+}
+
+/* Style Main */
+
+main {
+  height: 60vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  gap: 1rem;
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.input-button {
+  height: 48px;
+  width: 420px;
+  display: flex;
+  justify-content: center;
+}
+
+#input-task {
+  border: none;
+  outline: none;
+  height: 2rem;
+  width: 45vw;
+  padding: 0.5rem 0 0.5rem 1.3rem;
+  border-radius: 40px 0 0 40px;
+  font-size: 1.1rem;
+  color: var(--COLOR-INPUT);
+}
+
+#add-task {
+  border: none;
+  padding: 0 1.5rem;
+  border-radius: 0 40px 40px 0;
+  font-size: 1.1rem;
+  margin-right: 0.5rem;
+  background-color: var(--BACKGROUND-COLOR-ADD-BUTTON);
+}
+
+#add-task:active {
+  background-color: var(--BACKGROUND-COLOR-ADD-BUTTON-ACTIVE);
+}
+
+#clear {
+  border: none;
+  border-radius: 5px;
+  padding: 0.67rem 0.67rem;
+  font-size: 1.1rem;
+  background-color: transparent;
+  color: var(--COLOR-CLEAR-BUTTON);
+}
+
+#clear {
+  background-color: var(--BACKGROUND-COLOR-CLEAR-BUTTON);
+}
+
+#clear:active {
+  color: var(--COLOR-CLEAR-BUTTON-ACTIVE);
+}
+
+#task-container {
+  padding: 0 0.8rem;
+  overflow: auto;
+  scrollbar-width: none;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#task-container::-webkit-scrollbar {
+  display: none;
+}
+
+.task-list {
+  width: 100%;
+  background-color: var(--BACKGROUND-COLOR-CREATETODOS);
+  padding: 0.6rem 0;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.check-task {
+  order: -1;
+  margin: 0 0.5rem 0 1rem;
+}
+
+.fa-trash-can {
+  position: absolute;
+  right: 1rem;
+  padding: 6px 10px;
+  background-color: var(--BACKGROUND-COLOR-DELETE);
+  color: var(--COLOR-DELETE);
+  border-radius: 5px;
+  border: 1px solid var(--COLOR-BORDER-BUTTON);
+}
+
+.fa-trash-can:active {
+  background-color: var(--COLOR-DELETE);
+  color: var(--COLOR-DELETE-ACTIVE);
+}
+
+.edit {
+  border: none;
+  outline: none;
+  padding: 0.8px 0;
+  width: 65%;
+  font-size: 1.1rem;
+}
+
+/* Style Footer */
+
+footer {
+  height: 5rem;
+  padding: 0 1rem;
+  background-color: var(--BACKGROUND-COLOR-FOOTER);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copyright {
+  opacity: 0.5;
+}
+
+.social-link {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.social {
+  padding: 6px 9px;
+  color: var(--COLOR-SOCIAL);
+}
+
+/* || Responsive Design || */
+
+/* ms */
+
+@media screen and (min-width: 640px) {
+  .input-button {
+    width: 50vw;
+  }
+
+  .task-list {
+    width: 70vw;
+  }
+}
+
+/* md */
+
+@media screen and (min-width: 768px) {
+  .input-button {
+    width: 45vw;
+  }
+}
+
+/* lg */
+
+@media screen and (min-width: 1024px) {
+  .input-button {
+    width: 40vw;
+  }
+}
+
+/* xl */
+
+@media screen and (min-width: 1280px) {
+  .input-button {
+    width: 35vw;
+  }
+
+  #clear {
+    background-color: transparent;
+  }
+
+  #clear:hover {
+    background-color: var(--BACKGROUND-COLOR-CLEAR-BUTTON);
+  }
+
+  .task-list {
+    width: 60vw;
+  }
+
+  .social:hover {
+    background-color: var(--BACKGROUND-COLOR-SOCIAL-HOVER);
+    border-radius: 5px;
+  }
+}
+
+/* 2xl */
+
+@media screen and (min-width: 1536px) {
+  .input-button {
+    width: 32vw;
+  }
+
+  .task-list {
+    width: 55vw;
+  }
+}
+
+/* Mobile Landscape */
+
+@media screen and (max-height: 430px) and (min-aspect-ratio: 7/4) {
+  body {
+    height: 150vh;
+  }
+
+  main {
+    height: 38vw;
+  }
+}
